@@ -4,6 +4,8 @@
  */
 package com.lastdeveloper.springbootcallingexternalapi.response;
 
+import com.lastdeveloper.springbootcallingexternalapi.entity.PhotoItem;
+
 /**
  *
  * @author Last
@@ -55,6 +57,5 @@ public class PhotosFlickrAPIResponse {
     public void setPhoto(PhotoFlickrAPIResponse[] photo) {
         this.photo = photo;
     }
-    
-    
+
 }

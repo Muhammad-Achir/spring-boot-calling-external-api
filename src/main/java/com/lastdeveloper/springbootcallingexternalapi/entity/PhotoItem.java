@@ -22,7 +22,10 @@ public class PhotoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private int id;
+    
+    @Column(name = "photo_item_id")
+    private String photoItemId;
     
     @Column(name = "owner")
     private String owner;
@@ -54,12 +57,20 @@ public class PhotoItem {
     @Column(name = "has_comment")
     private int has_comment;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPhotoItemId() {
+        return photoItemId;
+    }
+
+    public void setPhotoItemId(String photoItemId) {
+        this.photoItemId = photoItemId;
     }
 
     public String getOwner() {
@@ -141,6 +152,6 @@ public class PhotoItem {
     public void setHas_comment(int has_comment) {
         this.has_comment = has_comment;
     }
-    
+
     
 }

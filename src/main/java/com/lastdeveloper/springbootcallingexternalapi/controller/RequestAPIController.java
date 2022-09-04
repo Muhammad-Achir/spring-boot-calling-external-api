@@ -6,6 +6,7 @@ package com.lastdeveloper.springbootcallingexternalapi.controller;
 
 import com.lastdeveloper.springbootcallingexternalapi.entity.PhotoItem;
 import com.lastdeveloper.springbootcallingexternalapi.repository.PhotoFlickrRepository;
+import com.lastdeveloper.springbootcallingexternalapi.response.PhotoFlickrAPIResponse;
 import com.lastdeveloper.springbootcallingexternalapi.response.RequestFlickrAPIResponse;
 import com.lastdeveloper.springbootcallingexternalapi.response.TodoResponse;
 import java.util.ArrayList;
@@ -33,6 +34,37 @@ public class RequestAPIController {
         String uri = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=8a31faa50d9023242e2521abf0bf3afa&gallery_id=66911286-72157647277042064&format=json&nojsoncallback=1";
         RestTemplate restTemplate = new RestTemplate();
         RequestFlickrAPIResponse result = restTemplate.getForObject(uri, RequestFlickrAPIResponse.class);        
+        
+        List<PhotoItem> photoItems = photoFlickrRepository.findAll();
+        
+        for (PhotoFlickrAPIResponse photo : result.getPhotos().getPhoto()) {
+//            System.out.println(Long.parseLong(photo.getId()));
+            
+            boolean isInclude = false;
+            for (PhotoItem photoItem : photoItems) {
+                if (photo.getId().equals(photoItem.getPhotoItemId())) {
+                    isInclude = true;
+                    break;
+                }
+            }
+            
+            if (!isInclude) {
+                PhotoItem photoItem = new PhotoItem();
+                photoItem.setPhotoItemId(photo.getId());
+                photoItem.setFarm(photo.getFarm());
+                photoItem.setHas_comment(photo.getHas_comment());
+                photoItem.setIs_primary(photo.getIs_primary());
+                photoItem.setIsfamily(photo.getIsfamily());
+                photoItem.setIsfriend(photo.getIsfriend());
+                photoItem.setIspublic(photo.getIspublic());
+                photoItem.setOwner(photo.getOwner());
+                photoItem.setSecret(photo.getSecret());
+                photoItem.setServer(photo.getServer());
+                photoItem.setTitle(photo.getTitle());
+
+                photoFlickrRepository.save(photoItem);
+            }
+        }
         
         return result;
     }

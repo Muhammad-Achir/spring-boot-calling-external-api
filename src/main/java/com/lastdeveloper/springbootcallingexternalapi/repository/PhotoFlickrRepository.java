@@ -6,14 +6,15 @@ package com.lastdeveloper.springbootcallingexternalapi.repository;
 
 import com.lastdeveloper.springbootcallingexternalapi.entity.PhotoItem;
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Last
  */
-public interface PhotoFlickrRepository extends CrudRepository<PhotoItem, Integer>{
+public interface PhotoFlickrRepository extends JpaRepository<PhotoItem, Integer>{
     
-    public List<PhotoItem> findById (PhotoItem photoItem);
+    public PhotoItem findByPhotoItemId (PhotoItem photoItem);
     
 }
