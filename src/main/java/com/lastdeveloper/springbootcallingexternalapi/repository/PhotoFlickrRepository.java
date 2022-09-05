@@ -15,6 +15,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface PhotoFlickrRepository extends JpaRepository<PhotoItem, Integer>{
     
-    public PhotoItem findByPhotoItemId (PhotoItem photoItem);
+    public PhotoItem findByPhotoItemId (String photoItemId);
     
 }

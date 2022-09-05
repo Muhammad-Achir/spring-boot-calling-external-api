@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,7 +31,7 @@ public class RequestAPIController {
     private PhotoFlickrRepository photoFlickrRepository;
     
     @GetMapping(value = "/collect-photos")
-    private RequestFlickrAPIResponse getHello() {
+    private RequestFlickrAPIResponse getDataAPI() {
 //        String uri = "http://localhost:8080/hello";
 //        String uri = "https://jsonplaceholder.typicode.com/todos";
         String uri = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=8a31faa50d9023242e2521abf0bf3afa&gallery_id=66911286-72157647277042064&format=json&nojsoncallback=1";
@@ -97,5 +98,12 @@ public class RequestAPIController {
             result.add(photoUrlResponse);
         }
         return result;
+    }
+    
+    @GetMapping("/photo/{id}")
+    public PhotoItem getPhotoByPhotoItemId(
+            @PathVariable("id") String id){
+        PhotoItem photoItem = photoFlickrRepository.findByPhotoItemId(id);
+        return photoItem;
     }
 }
