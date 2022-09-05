@@ -7,6 +7,7 @@ package com.lastdeveloper.springbootcallingexternalapi.controller;
 import com.lastdeveloper.springbootcallingexternalapi.entity.PhotoItem;
 import com.lastdeveloper.springbootcallingexternalapi.repository.PhotoFlickrRepository;
 import com.lastdeveloper.springbootcallingexternalapi.response.PhotoFlickrAPIResponse;
+import com.lastdeveloper.springbootcallingexternalapi.response.PhotoUrlResponse;
 import com.lastdeveloper.springbootcallingexternalapi.response.RequestFlickrAPIResponse;
 import com.lastdeveloper.springbootcallingexternalapi.response.TodoResponse;
 import java.util.ArrayList;
@@ -77,5 +78,22 @@ public class RequestAPIController {
             photoItems.add(pI);
         }
         return ResponseEntity.ok(photoItems);
+    }
+    
+    @GetMapping("/photos-url")
+    public List<PhotoUrlResponse> getPhotosUrl() {
+        List<PhotoUrlResponse> result = new ArrayList<>();
+        for (PhotoItem photoItem : photoFlickrRepository.findAll()) {
+            PhotoUrlResponse photoUrlResponse = new PhotoUrlResponse();
+            photoUrlResponse.setId(photoItem.getId());
+            photoUrlResponse.setUrl("https://farm" + photoItem.getFarm() + 
+                    ".staticflickr.com/" + photoItem.getServer() +
+                    "/" + photoItem.getPhotoItemId() + 
+                    "_" + photoItem.getSecret() +
+                    ".jpg");
+            
+            result.add(photoUrlResponse);
+        }
+        return result;
     }
 }
